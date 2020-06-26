@@ -7,5 +7,8 @@
     "express": "~4.4.3",
     "request": "~2.36.0",
     "body-parser": "~1.5.2"
+  },
+  "scripts": {
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server"
   }
 }
