@@ -7,19 +7,21 @@ var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb'
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
+app.get('/', (req, res) => res.send('Hello World!'));
 
-app.all('*', function (req, res, next) {
+// app.all('*', function (req, res, next) {
 
-    // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
+//     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+//     res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
 
-    if (req.method === 'OPTIONS') {
-        // CORS Preflight
-        res.send();
-    } else {
-		res.send("got it");
+//     if (req.method === 'OPTIONS') {
+//         // CORS Preflight
+//         res.send();
+//     } else {
+// 		return res.send("got it");
+// 	});
 	// 	console.log("Request body: " + req.body.q);
 	// 	var options_interpret = {
 	// 		'method': 'POST',
@@ -63,7 +65,7 @@ app.all('*', function (req, res, next) {
 	// 		  res.send(query_result.results.records);
 	// 	  })
     // }
-});
+// });
 
 app.set('port', process.env.PORT || 8000);
 
