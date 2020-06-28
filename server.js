@@ -1,5 +1,5 @@
 var express = require('express'),
-    request = require('request'),
+    request = require('request-promise'),
     bodyParser = require('body-parser'),
     app = express();
 
@@ -19,23 +19,53 @@ app.all('*', function (req, res, next) {
         // CORS Preflight
         res.send();
     } else {
-        // var targetURL = req.header('Target-URL');
-        // if (!targetURL) {
-        //     res.send(500, { error: 'There is no Target-Endpoint header in the request' });
-        //     return;
-        // }
-        request({ url: 'https://na44.stmfa.stm.salesforce.com/services/data/v50.0/wave/folders', method: "GET", json: req.body, headers: {'Authorization': 'Bearer 00DRM000000GySC!AQkAQNG9EuYL5YfyaQmDYpZ4zUupRd8ML_CeVhIosp7Mb6nIquS3g33uD_SMSaUkgbqjNcHl9rHsF.r8mMXPpq.1a0KiQHMM', "Cookie": "BrowserId=fESh3bcvEeqVIqtpX5pgxQ"} },
-            function (error, response, body) {
-                console.log(error);
-                if (error) {
-                    console.error('error: ' + response.statusCode)
-                }
-               console.log(body);
-            }).pipe(res);
-    }
+		res.send("got it");
+	// 	console.log("Request body: " + req.body.q);
+	// 	var options_interpret = {
+	// 		'method': 'POST',
+	// 		'url': 'https://na44.stmfa.stm.salesforce.com/services/data/v50.0/autonomous-analytics/nlq/interpret',
+	// 		'headers': {
+	// 		  'Authorization': 'Bearer 00DRM000000GySC!AQkAQN8BFW53kePA05aG2GN7EvDIpDcouXm1ovP.xuTy3w4XnaxtZaPolg2p9TnoreSySkIlFdyWSRWYCQQDkI6ex9yYv4Dh',
+	// 		  'Content-Type': 'application/json',
+	// 		  'Cookie': 'BrowserId=fESh3bcvEeqVIqtpX5pgxQ'
+	// 		},
+	// 		body: JSON.stringify({"query":`${req.body.q}`,"dataSource":{"type":"dataset","id":"0FbRM0000001hOf0AI"},"labelOverrides":[]})
+	// 		// body: JSON.stringify({"query":"annual revenue by billing_country","dataSource":{"type":"dataset","id":"0FbRM0000001g4n0AA"},"labelOverrides":[]})
+		  
+	// 	  };
+	// 	  request(options_interpret, function (error, response_interpret) {
+	// 		if (error) throw new Error(error);
+	// 	  })
+	// 	  .then(function (response) {
+	// 		response_interpret = JSON.parse(response);
+	// 		console.log(response_interpret.query);
+	// 		group = response_interpret.query.sources[0].groups[0];
+	// 		measure = response_interpret.query.sources[0].columns[0].name;
+	// 		var options = {
+	// 			'method': 'POST',
+	// 			'url': 'https://na44.stmfa.stm.salesforce.com/services/data/v50.0/wave/query',
+	// 			'headers': {
+	// 			  'Authorization': 'Bearer 00DRM000000GySC!AQkAQN8BFW53kePA05aG2GN7EvDIpDcouXm1ovP.xuTy3w4XnaxtZaPolg2p9TnoreSySkIlFdyWSRWYCQQDkI6ex9yYv4Dh',
+	// 			  'Content-Type': 'application/json',
+	// 			  'Cookie': 'BrowserId=fESh3bcvEeqVIqtpX5pgxQ'
+	// 			},
+	// 			body: JSON.stringify({"query":`q = load \"0FbRM0000001hOf0AI/0FcRM0000002CyI0AU\";\nq = group q by ${group};\nq = foreach q generate ${group} as ${group}, count() as ${measure};\nq = order q by ${group} asc;\nq = limit q 1000;\n`})
+			  
+	// 		  };
+	// 		  return request(options, function (error, response) {
+	// 			if (error) throw new Error(error);
+	// 			console.log(response.body);
+	// 		  });
+	// 	  })
+	// 	  .then(function(response) {
+	// 		  query_result = JSON.parse(response);
+	// 		  console.log(query_result.results.records[0]);
+	// 		  res.send(query_result.results.records);
+	// 	  })
+    // }
 });
 
-app.set('port', process.env.PORT || 3002);
+app.set('port', process.env.PORT || 8000);
 
 app.listen(app.get('port'), function () {
     console.log('Proxy server listening on port ' + app.get('port'));
