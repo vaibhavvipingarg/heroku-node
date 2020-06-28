@@ -36,31 +36,34 @@ app.all('*', function (req, res, next) {
 			if (error) throw new Error(error);
 		  })
 		  .then(function (response) {
-			response_interpret = JSON.parse(response);
-			console.log(response_interpret.query);
-			group = response_interpret.query.sources[0].groups[0];
-			measure = response_interpret.query.sources[0].columns[0].name;
-			var options = {
-				'method': 'POST',
-				'url': 'https://na44.stmfa.stm.salesforce.com/services/data/v50.0/wave/query',
-				'headers': {
-				'Authorization': 'Bearer 00DRM000000GySC!AQkAQLeaE3NX0QM5qXJIP0E2XTZHMxTxrAEboney2oCOK3JPy7T9nqFWtOA4Lc.cOArVvtB9HuNvrydHnb3j0TNgSWTgCXwz',
-				  'Content-Type': 'application/json',
-				  'Cookie': 'BrowserId=fESh3bcvEeqVIqtpX5pgxQ'
-				},
-				body: JSON.stringify({"query":`q = load \"0FbRM0000001hOf0AI/0FcRM0000002CyI0AU\";\nq = group q by ${group};\nq = foreach q generate ${group} as ${group}, count() as ${measure};\nq = order q by ${group} asc;\nq = limit q 1000;\n`})
+			res.send(response);
+		  })
+		//   .then(function (response) {
+		// 	response_interpret = JSON.parse(response);
+		// 	console.log(response_interpret.query);
+		// 	group = response_interpret.query.sources[0].groups[0];
+		// 	measure = response_interpret.query.sources[0].columns[0].name;
+		// 	var options = {
+		// 		'method': 'POST',
+		// 		'url': 'https://na44.stmfa.stm.salesforce.com/services/data/v50.0/wave/query',
+		// 		'headers': {
+		// 		'Authorization': 'Bearer 00DRM000000GySC!AQkAQLeaE3NX0QM5qXJIP0E2XTZHMxTxrAEboney2oCOK3JPy7T9nqFWtOA4Lc.cOArVvtB9HuNvrydHnb3j0TNgSWTgCXwz',
+		// 		  'Content-Type': 'application/json',
+		// 		  'Cookie': 'BrowserId=fESh3bcvEeqVIqtpX5pgxQ'
+		// 		},
+		// 		body: JSON.stringify({"query":`q = load \"0FbRM0000001hOf0AI/0FcRM0000002CyI0AU\";\nq = group q by ${group};\nq = foreach q generate ${group} as ${group}, count() as ${measure};\nq = order q by ${group} asc;\nq = limit q 1000;\n`})
 			  
-			  };
-			  return request(options, function (error, response) {
-				if (error) throw new Error(error);
-				console.log(response.body);
-			  });
-		  })
-		  .then(function(response) {
-			  query_result = JSON.parse(response);
-			  console.log(query_result.results.records[0]);
-			  res.send(query_result.results.records);
-		  })
+		// 	  };
+		// 	  return request(options, function (error, response) {
+		// 		if (error) throw new Error(error);
+		// 		console.log(response.body);
+		// 	  });
+		//   })
+		//   .then(function(response) {
+		// 	  query_result = JSON.parse(response);
+		// 	  console.log(query_result.results.records[0]);
+		// 	  res.send(query_result.results.records);
+		//   })
     }
 });
 
